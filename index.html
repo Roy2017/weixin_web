@@ -16,6 +16,14 @@
             jsApiList: ['chooseImage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
         });
         
+        wx.ready(function(){
+            console.log("验证成功!!");
+        });
+
+        wx.error(function(res){
+            console.log("验证失败!!",res);
+        });
+
         function handleClick () {
             console.log("Click");
             wx.chooseImage({
@@ -23,9 +31,13 @@
                 sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
                 sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
                 success: function (res) {
+                    console.log("success!!");
                     var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
 
                     getElementByID('picImg').src = localIds;
+                },
+                fail:function (res) {
+                    console.log("fail!!",res);
                 }
             });
         }
@@ -33,7 +45,7 @@
 </head>
 <body>
     <h1>这是一个微信网页</h1>
-    <button onclick="handleClick">获取一张图片！</button>
+    <button onclick="handleClick()">获取一张图片！</button>
     <img id="picImg" src="" alt="" style="{width: 20px;height:20px;background-color: black}">
 </body>
 </html>
